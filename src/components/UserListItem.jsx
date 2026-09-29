@@ -1,3 +1,6 @@
+
+import { fromIsoDate } from "../utils/DateTimaUtils";
+
 export default function UserListItem({
     id,
     firstName,
@@ -6,7 +9,7 @@ export default function UserListItem({
     phoneNumber,
     createdAt,
     imageUrl,
- }) {
+}) {
     return (
         <tr>
             <td>
@@ -20,7 +23,7 @@ export default function UserListItem({
             <td>{lastName}</td>
             <td>{email}</td>
             <td>{phoneNumber}</td>
-            <td>{createdAt}</td>
+            <td>{fromIsoDate(createdAt)}</td>
 
             <td className="actions">
                 <button className="btn edit-btn" title="Edit">
@@ -76,5 +79,5 @@ export default function UserListItem({
                 </button>
             </td>
         </tr>
-    );    
+    );
 }
