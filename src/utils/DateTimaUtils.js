@@ -1,3 +1,4 @@
+
 export const fromIsoDate = (isoDate) => {
     const date = new Date(isoDate);
 

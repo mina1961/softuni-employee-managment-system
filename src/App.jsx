@@ -13,53 +13,57 @@ import './styles.css'
 
 function App() {
 
-  const [users, setUsers] = useState([]);
-  console.log(users);
+    const [users, setUsers] = useState([]);
+    const [showSaveUserModal, setShowSaveUserModal] = useState(false);
 
-  useEffect(() => {
-    fetch('https://novhnqesapzkjenxcknt.supabase.co/rest/v1/users', {
-      headers: {
-        'apikey': 'sb_publishable_ViN1O8flxVtY-WTTAiGxIg_Hr2KOZcZ'
-      }
-    }
+    useEffect(() => {
+        fetch('https://novhnqesapzkjenxcknt.supabase.co/rest/v1/users', {
+            headers: {
+                'apikey': 'sb_publishable_ViN1O8flxVtY-WTTAiGxIg_Hr2KOZcZ'
+            }
+        }
 
-    )
-    .then(res => res.json()
-    .then(data => setUsers(data)))
-    .catch(err => console.error(err));
-  }, []);
+        )
+            .then(res => res.json()
+                .then(data => setUsers(data)))
+            .catch(err => console.error(err));
+    }, []);
 
-  return (
-    <>
-      <Header />
+    const addUserClickHandler = () => {
+        setShowSaveUserModal(true);
+    };
 
-      {/* Main component */}
-          {/* Table component */}
-          <UserList users={users} />
+    return (
+        <>
+            <Header />
 
-          <button className="btn-add btn">Add new user</button>;
+            {/* Main component */}
+            {/* Table component */}
+            <UserList users={users} />
 
-          {/* <Spinner /> */}
+            <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>;
 
-          <Pagination />
-        
+            {/* <Spinner /> */}
 
-        {/* User details component */}
-        {/* <UserDetails /> */}
-
-
-        {/* Create/Edit Form component */}
-        {/* <SaveUserModal /> */}
+            <Pagination />
 
 
-        {/* Delete user component */}
-        {/* <UserDeleteModal /> */}
+            {/* User details component */}
+            {/* <UserDetails /> */}
 
-      
 
-      <Footer />
-    </>
-  );
+            {/* Create/Edit Form component */}
+            {showSaveUserModal && <SaveUserModal />}
+
+
+            {/* Delete user component */}
+            {/* <UserDeleteModal /> */}
+
+
+
+            <Footer />
+        </>
+    );
 }
 
 export default App
