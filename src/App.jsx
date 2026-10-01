@@ -11,8 +11,7 @@ import UserList from './components/UserList';
 import UserSearch from './components/UserSearch';
 import './styles.css'
 
-const baseURL = 'https://novhnqesapzkjenxcknt.supabase.co/rest/v1/users'
-
+const baseURL = 'https://novhnqesapzkjenxcknt.supabase.co/rest/v1/users';
 const apiKey = 'sb_publishable_ViN1O8flxVtY-WTTAiGxIg_Hr2KOZcZ';
 
 function App() {
