@@ -21,17 +21,22 @@ function App() {
     const [showSaveUserModal, setShowSaveUserModal] = useState(false);
 
     useEffect(() => {
-        fetch(baseURL, {
-            headers: {
-                'apikey': apiKey
-            }
-        }
-
-        )
-            .then(res => res.json()
-                .then(data => setUsers(data)))
+        fetchUsers()
+            .then(data => setUsers(data))
             .catch(err => console.error(err));
     }, []);
+
+    async function fetchUsers() {
+        const response = await fetch(baseURL, {
+            headers: {
+                'apikey': apiKey,
+            }
+        });
+
+        const data = await response.json();
+
+        return data;
+    }
 
     const addUserClickHandler = () => {
         setShowSaveUserModal(true);
@@ -41,19 +46,29 @@ function App() {
         setShowSaveUserModal(false);
     }
 
-    const submitUserHandler = (user) => {
-        // Send user to REST API
-        fetch(baseURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'apikey': apiKey
-            },
-            body: JSON.stringify(user)
-        })
-            .then(() => console.log('User added successfully'))
-            .catch(err => console.error(err))
-            .finally(() => setShowSaveUserModal(false));
+    const submitUserHandler = async (user) => {
+        try {
+            // Send user to REST API
+            await fetch(baseURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': apiKey
+                },
+                body: JSON.stringify(user)
+            });
+
+            // Fetch all users after adding a new one
+            const updatedUsers = await fetchUsers();
+
+            // Update the state with the latest users
+            setUsers(updatedUsers);
+
+        } catch (err) {
+            alert('An error occurred while adding the user.');
+        } finally {
+            setShowSaveUserModal(false);
+        }
     };
 
     return (
