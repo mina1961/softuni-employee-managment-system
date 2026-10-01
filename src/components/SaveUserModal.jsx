@@ -1,5 +1,31 @@
 
-export default function SaveUserModal({ onClose }) {
+export default function SaveUserModal({
+     onClose,
+    onSubmit
+ }) {
+    const submitHandler = (event) => {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        // Construct employee object from form data
+        const employee = {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            email: formData.get('email'),
+            phoneNumber: formData.get('phoneNumber'),
+            imageUrl: formData.get('imageUrl'),
+            address: {
+                country: formData.get('country'),
+                city: formData.get('city'),
+                street: formData.get('street'),
+                streetNumber: formData.get('streetNumber')
+            }
+        }
+        // Call the onSubmit prop with the employee object
+        onSubmit(employee);
+    };
+
     return (
         <div className="overlay">
             <div className="backdrop" onClick={onClose}></div>
@@ -16,7 +42,7 @@ export default function SaveUserModal({ onClose }) {
                             </svg>
                         </button>
                     </header>
-                    <form>
+                    <form onSubmit={submitHandler}>
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="firstName">First name</label>
@@ -81,7 +107,7 @@ export default function SaveUserModal({ onClose }) {
                                 <label htmlFor="street">Street</label>
                                 <div className="input-wrapper">
                                     <span><i className="fa-solid fa-map"></i></span>
-                                    <input id="street" name="stfor reet" type="text" />
+                                    <input id="street" name="street" type="text" />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -94,7 +120,7 @@ export default function SaveUserModal({ onClose }) {
                         </div>
                         <div id="form-actions">
                             <button id="action-save" className="btn" type="submit">Save</button>
-                            <button id="action-cancel" className="btn" type="button">
+                            <button id="action-cancel" className="btn" type="button" onClick={onClose}>
                                 Cancel
                             </button>
                         </div>
