@@ -76,7 +76,7 @@ function App() {
 
             {/* Main component */}
             {/* Table component */}
-            <UserList users={users} />
+            <UserList users={users} setUsers={setUsers} />
 
             <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>;
 
